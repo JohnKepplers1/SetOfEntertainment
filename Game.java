@@ -1,48 +1,38 @@
-
-
 public class Game {
+    protected Player firstPlayer;
+    protected Player secondPlayer;
+    protected Field gameField;
+    protected int fieldSize;
 
-    public Player firstPlayer;
-    public Player secondPlayer;
-    public Field gameField;
-
-    Game(Player first, Player second, int size)
-    {
-        if (first.getType() == second.getType())  {
-            System.out.println("Игроки имеют одинаковый тип.");
-            System.exit(1);
-        }
+    Game(Player first, Player second, int size) {
 
         firstPlayer = first;
         secondPlayer = second;
+        fieldSize = size;
         gameField = new Field(size);
     }
 
-    void startGame()
-    {
+    public void startGame() {
         Player currentPlayer = firstPlayer;
-        Cell turn; // ход игрока
-        while(true)
-        {
+        Cell turn;
+        while (true) {
             gameField.printField();
 
             turn = currentPlayer.getTurn(gameField);
 
-            if (gameField.cellType(turn.i, turn.j) == Cell.Type.Null)
+
                 gameField.setCell(turn);
 
 
             // проверка на победителя
-            if (gameField.isWinner(turn))
-            {
+            if (gameField.isWinner(turn)) {
                 gameField.printField();
-                System.out.println("Выиграл "+ currentPlayer.getPlayerName() + "("+ currentPlayer.getType() +")!");
+                System.out.println(currentPlayer.getPlayerName() + "(" + currentPlayer.getType() + ") одержал победу!");
                 return;
             }
 
             // проверка на ничью
-            if (gameField.isFieldFilled())
-            {
+            if (gameField.TheEnd()) {
                 gameField.printField();
                 System.out.println("Ничья.");
                 return;
@@ -57,4 +47,7 @@ public class Game {
         }
 
     }
+
+
 }
+
